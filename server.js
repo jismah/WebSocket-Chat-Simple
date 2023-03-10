@@ -13,16 +13,16 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
+io.on('connection', (socket, req) => {
+    console.log('Client connected: ' + socket.remoteAddress);
 
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+    console.log(socket.remoteAddress+ ' say: ' + msg);
     io.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log('Client disconnected: ' + socket.remoteAddress);
   });
 });
 
